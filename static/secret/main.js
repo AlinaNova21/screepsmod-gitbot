@@ -24,7 +24,7 @@
     steam () {
       return true
     }
-    signin (username, password) {
+    signIn (username, password) {
       return this.API.signIn(username, password)
         .then(({ token }) => {
           this.API.setToken(data.token)
