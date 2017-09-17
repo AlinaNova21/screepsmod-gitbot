@@ -3,6 +3,7 @@
   class GitBot {
     constructor ($window, API) {
       this.token = ''
+      this.API = API
       $window.addEventListener('message', (e) => {
         let data = JSON.parse(e.data)
         API.setToken(data.token)
@@ -11,7 +12,7 @@
     }
     setSecret (secret) {
       this.status = 'Setting secret...'
-      return API.gitbot(this.secret)
+      return this.API.gitbot(this.secret)
         .then((res) => {
           if (res.ok) {
             this.status = 'Secret secret set!'
@@ -24,9 +25,9 @@
       return true
     }
     signin (username, password) {
-      return API.signIn(username, password)
+      return this.API.signIn(username, password)
         .then(({ token }) => {
-          API.setToken(data.token)
+          this.API.setToken(data.token)
           return this.setSecret(this.secret)
         })
     }
