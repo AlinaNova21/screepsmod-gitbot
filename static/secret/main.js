@@ -56,8 +56,8 @@
     gitbot (secret) {
       return this.req('POST', '/api/gitbot/secret', { secret })
     }
-    signIn (username, password) {
-      return this.req('POST', '/api/auth/signin', { username, password })
+    signIn (email, password) {
+      return this.req('POST', '/api/auth/signin', { email, password })
     }
   }
   app.controller('gitbot', GitBot)
