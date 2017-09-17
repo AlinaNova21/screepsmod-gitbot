@@ -6,19 +6,29 @@
       $window.addEventListener('message', (e) => {
         let data = JSON.parse(e.data)
         API.setToken(data.token)
-        this.status = 'Setting secret...'
-        API.gitbot(this.secret)
-          .then((res) => {
-            if (res.ok) {
-              this.status = 'Secret secret set!'
-            } else {
-              this.status = `Secret set attempt failed! ${res.error}`
-            }
-          })
+        this.setSecret(this.secret)
       })
+    }
+    setSecret (secret) {
+      this.status = 'Setting secret...'
+      return API.gitbot(this.secret)
+        .then((res) => {
+          if (res.ok) {
+            this.status = 'Secret secret set!'
+          } else {
+            this.status = `Secret set attempt failed! ${res.error}`
+          }
+        })
     }
     steam () {
       return true
+    }
+    signin (username, password) {
+      return API.signIn(username, password)
+        .then(({ token }) => {
+          API.setToken(data.token)
+          return this.setSecret(this.secret)
+        })
     }
   }
   class API {
@@ -44,6 +54,9 @@
     }
     gitbot (secret) {
       return this.req('POST', '/api/gitbot/secret', { secret })
+    }
+    signIn (username, password) {
+      return this.req('POST', '/api/auth/signin', { username, password })
     }
   }
   app.controller('gitbot', GitBot)
