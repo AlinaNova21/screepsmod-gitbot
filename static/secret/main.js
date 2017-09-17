@@ -27,7 +27,7 @@
     signIn (username, password) {
       return this.API.signIn(username, password)
         .then(({ token }) => {
-          this.API.setToken(data.token)
+          this.API.setToken(token)
           return this.setSecret(this.secret)
         })
     }
